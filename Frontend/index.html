@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="stylesheet.css">
-  <title>DB Project 1 new</title>
+  <title>DB Project 1</title>
 </head>
 <body>
   <main>
@@ -14,10 +14,22 @@
  
      <br><br><br>
      <div> 
-        <input placeholder="search by name" id="search-input">
-        <button id="search-btn">Search</button>
+        <label>Search by...</label> <br>
+        Name: <input placeholder="Name" id="search-input">
+        <button id="name">Search</button> <br>
+        UserID:<input placeholder="UserID" id="search-input">
+        <button id="user">Search</button> <br>
+        Salary between <input placeholder="LowerSalary" id="search-input">
+        and <input placeholder="UpperSalary" id="search-input">
+        <button id="salary">Search</button> <br>
+        Age between <input placeholder="LowerAge" id="search-input">
+        and <input placeholder="UpperAge" id="search-input">
+        <button id="age">Search</button> <br>
+        Registered after John  <button id="John">Search</button> <br>
+        Registered same day as John <button id="same-day">Search</button> <br>
+        Registered today: <button id="registered-today">Search</button> <br>
      </div>
-
+     <br><br><br>
 
      <table id="table">
          <thead>
