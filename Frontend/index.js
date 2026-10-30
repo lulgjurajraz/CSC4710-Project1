@@ -132,13 +132,32 @@ searchAge.onclick = function (){
     .then(data => loadHTMLTable(data['data']));
 }
 
-//registered after john
+//registered after id
 const regAfterBtn = document.querySelector('#btn-reg-after-ID');
 regAfterBtn.onclick = function (){
     const searchInput = document.querySelector('#input-reg-after-ID');
     const id = searchInput.value;
     searchInput.value = "";
     fetch('http://localhost:5050/regAfter/' + id)
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+}
+
+//registered same day as id
+const regSameDayBtn = document.querySelector('#btn-reg-same-day-ID');
+regSameDayBtn.onclick = function (){
+    const searchInput = document.querySelector('#input-reg-same-day-ID');
+    const id = searchInput.value;
+    searchInput.value = "";
+    fetch('http://localhost:5050/regSameDay/' + id)
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+}
+
+//registered today
+const regTodayBtn = document.querySelector('#btn-reg-today');
+regTodayBtn.onclick = function (){
+    fetch('http://localhost:5050/regToday/')
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 }

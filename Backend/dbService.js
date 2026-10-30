@@ -217,12 +217,12 @@ class DbService{
 
    //never signed in
 
-   //registered after john
+   //registered after id
 async regAfter(id){
 
     try{
       id = parseInt(id, 10);
-      
+
       const idRegistered = await new Promise((resolve, reject) => {
         const query = "SELECT date_added FROM names WHERE id = ?;";
         connection.query(query, [id], (err, results) => {
@@ -251,9 +251,66 @@ async regAfter(id){
          }
 }
 
-   //registered same day as john
+   //registered same day 
+   async regSameDay(id){
+
+    try{
+      id = parseInt(id, 10);
+
+      const idRegistered = await new Promise((resolve, reject) => {
+        const query = "SELECT date_added FROM names WHERE id = ?;";
+        connection.query(query, [id], (err, results) => {
+          if(err) reject(new Error(err.message));
+          else resolve(results[0].date_added);
+        });
+      });
+
+        const response = await new Promise((resolve, reject) => 
+        {
+            
+            const query = "SELECT * FROM names WHERE date_added = ?;";
+            connection.query(query, [idRegistered], (err, results) => {
+                if(err) reject(new Error(err.message));
+                else resolve(results);
+            });
+        }
+        
+    );
+    console.log(response);  // for debugging to see the result of select
+             return response;
+
+         }  catch(error){
+            console.log(error);
+         }
+}
 
    //registered today
+   async regToday(){
+
+    try{
+      
+
+        const response = await new Promise((resolve, reject) => 
+        {
+            
+            const query = "SELECT * FROM names WHERE date_added = CURDATE();";
+            connection.query(query, (err, results) => {
+                if(err) reject(new Error(err.message));
+                else resolve(results);
+            });
+        }
+        
+    );
+    console.log(response);  // for debugging to see the result of select
+             return response;
+
+         }  catch(error){
+            console.log(error);
+         }
+}
+
+
+
 
    async deleteRowById(id){
          try{

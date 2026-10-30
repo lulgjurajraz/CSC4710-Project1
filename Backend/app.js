@@ -113,7 +113,7 @@ app.get('/searchByAge/:age1/:age2', (request, response) => {
 });
 
 
-//registered after john
+//registered after 
 app.get('/regAfter/:id', (request, response) => {
     const {id} = request.params;
     const db = dbService.getDbServiceInstance();
@@ -124,11 +124,26 @@ app.get('/regAfter/:id', (request, response) => {
     .catch(err => console.log(err));
 });
 
-//registered same day as john
+//registered same day as 
+app.get('/regSameDay/:id', (request, response) => {
+    const {id} = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.regSameDay(id);
+
+    result
+    .then(data => response.json({data: data}))
+    .catch(err => console.log(err));
+});
 
 //registered today
+app.get('/regToday/', (request, response) => {
+    const db = dbService.getDbServiceInstance();
+    const result = db.regToday();
 
-
+    result
+    .then(data => response.json({data: data}))
+    .catch(err => console.log(err));
+});
 
 
 // update
