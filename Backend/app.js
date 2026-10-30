@@ -83,7 +83,7 @@ app.get('/searchById/:id', (request, response) => { // we can debug by URL
     const db = dbService.getDbServiceInstance();
 
     let result;
-    if(id === -1) // in case we want to search all
+    if(id == -1) // in case we want to search all
        result = db.getAllData()
     else 
        result =  db.searchById(id); // call a DB function
