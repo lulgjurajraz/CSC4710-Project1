@@ -90,7 +90,7 @@ addBtn.onclick = function (){
     .then(data => insertRowIntoTable(data['data']));
 }
 
-// when the searchBtn is clicked
+// sample code when the searchBtn is clicked
 const searchBtn =  document.querySelector('#search-btn');
 searchBtn.onclick = function (){
     const searchInput = document.querySelector('#search-input');
@@ -101,6 +101,8 @@ searchBtn.onclick = function (){
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 }
+
+
 
 //this is me messing around with ID search
 const searchID =  document.querySelector('#search-btn-id');
@@ -115,7 +117,31 @@ searchID.onclick = function (){
 }
 
 
+//search by age
+const searchAge =  document.querySelector('#search-btn-age');
+searchAge.onclick = function (){
+    const searchInput1 = document.querySelector('#search-input-age1');
+    const searchInput2 = document.querySelector('#search-input-age2');
+    const age1 = searchInput1.value;
+    const age2 = searchInput2.value;
+    searchInput1.value = "";
+    searchInput2.value = "";
 
+    fetch('http://localhost:5050/searchByAge/' + age1 + '/' + age2)
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+}
+
+//registered after john
+const regAfterBtn = document.querySelector('#btn-reg-after-ID');
+regAfterBtn.onclick = function (){
+    const searchInput = document.querySelector('#input-reg-after-ID');
+    const id = searchInput.value;
+    searchInput.value = "";
+    fetch('http://localhost:5050/regAfter/' + id)
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+}
 
 let rowToDelete; 
 

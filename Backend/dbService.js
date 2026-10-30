@@ -187,6 +187,7 @@ class DbService{
    
    //search by salary
 
+    //search by age
    async searchByAge(age1, age2){
         try{
 
@@ -214,11 +215,41 @@ class DbService{
          }
    }
 
-   //search by age
-
    //never signed in
 
    //registered after john
+async regAfter(id){
+
+    try{
+      id = parseInt(id, 10);
+      
+      const idRegistered = await new Promise((resolve, reject) => {
+        const query = "SELECT date_added FROM names WHERE id = ?;";
+        connection.query(query, [id], (err, results) => {
+          if(err) reject(new Error(err.message));
+          else resolve(results[0].date_added);
+        });
+      });
+
+        const response = await new Promise((resolve, reject) => 
+        {
+            
+            const query = "SELECT * FROM names WHERE date_added > ?;";
+            connection.query(query, [idRegistered], (err, results) => {
+                if(err) reject(new Error(err.message));
+                else resolve(results);
+            });
+        }
+
+        
+    );
+    console.log(response);  // for debugging to see the result of select
+             return response;
+
+         }  catch(error){
+            console.log(error);
+         }
+}
 
    //registered same day as john
 

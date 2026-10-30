@@ -114,6 +114,15 @@ app.get('/searchByAge/:age1/:age2', (request, response) => {
 
 
 //registered after john
+app.get('/regAfter/:id', (request, response) => {
+    const {id} = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.regAfter(id);
+
+    result
+    .then(data => response.json({data: data}))
+    .catch(err => console.log(err));
+});
 
 //registered same day as john
 
