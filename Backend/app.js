@@ -48,7 +48,7 @@ app.get('/getAll', (request, response) => {
     .catch(err => console.log(err));
 });
 
-
+//SEARCH
 app.get('/search/:name', (request, response) => { // we can debug by URL
     
     const {name} = request.params;
@@ -67,6 +67,59 @@ app.get('/search/:name', (request, response) => { // we can debug by URL
     .then(data => response.json({data: data}))
     .catch(err => console.log(err));
 });
+
+//search by first name
+
+//search by last name
+
+//search by userID
+
+app.get('/searchById/:id', (request, response) => { // we can debug by URL
+    
+    const {id} = request.params;
+    
+    console.log(id);
+
+    const db = dbService.getDbServiceInstance();
+
+    let result;
+    if(id === -1) // in case we want to search all
+       result = db.getAllData()
+    else 
+       result =  db.searchById(id); // call a DB function
+
+    result
+    .then(data => response.json({data: data}))
+    .catch(err => console.log(err));
+});
+
+//search by salary
+
+// search by age
+app.get('/searchByAge/:age1/:age2', (request, response) => {
+    
+    const {age1, age2} = request.params;
+    
+    console.log(age1);
+    console.log(age2);
+
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchByAge(age1, age2);
+
+    result
+    .then(data => response.json({data: data}))
+    .catch(err => console.log(err));
+});
+
+
+//registered after john
+
+//registered same day as john
+
+//registered today
+
+
 
 
 // update

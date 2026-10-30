@@ -135,7 +135,6 @@ class DbService{
          }
    }
 
-
    async searchByName(name){
         try{
              const dateAdded = new Date();
@@ -158,6 +157,72 @@ class DbService{
          }
    }
 
+   //search by userid
+
+   async searchById(id){
+        try{
+
+         id = parseInt(id, 10);
+             const dateAdded = new Date();
+             // use await to call an asynchronous function
+             const response = await new Promise((resolve, reject) => 
+                  {
+                     const query = "SELECT * FROM names where id = ?;";
+                     connection.query(query, [id], (err, results) => {
+                         if(err) reject(new Error(err.message));
+                         else resolve(results);
+                     });
+                  }
+             );
+
+            console.log(response);  // for debugging to see the result of select
+             return response;
+
+         }  catch(error){
+            console.log(error);
+         }
+   }
+
+
+   
+   //search by salary
+
+   async searchByAge(age1, age2){
+        try{
+
+         age1 = parseInt(age1, 10);
+         age2 = parseInt(age2, 10);
+
+
+             const dateAdded = new Date();
+             // use await to call an asynchronous function
+             const response = await new Promise((resolve, reject) => 
+                  {
+                     const query = "SELECT * FROM names where age >= ? AND age <= ?;";
+                     connection.query(query, [age1, age2], (err, results) => {
+                         if(err) reject(new Error(err.message));
+                         else resolve(results);
+                     });
+                  }
+             );
+
+            console.log(response);  // for debugging to see the result of select
+             return response;
+
+         }  catch(error){
+            console.log(error);
+         }
+   }
+
+   //search by age
+
+   //never signed in
+
+   //registered after john
+
+   //registered same day as john
+
+   //registered today
 
    async deleteRowById(id){
          try{
