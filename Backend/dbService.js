@@ -161,32 +161,51 @@ async userSignIn(username,password){
 }
 
 //search first and last names
+   // async searchByName(firstname,lastname){
+   //      try{
+   //           let query = "SELECT username,firstname,lastname,age,salary,registerday, signintime FROM Users WHERE 1=1";
+   //           let values = [];
+   //           if(firstname !== "all" && firstname!==""){
+   //             query+= " AND firstname LIKE ?";
+   //             values.push("%"+firstname +"%");
+   //           } 
+   //           if(lastname!=="all" && lastname !==""){
+   //             query+= " AND lastname LIKE ?";
+   //             values.push("%"+lastname +"%");
+   //           }
+
+   //           query+=";";
+   //           const response= await new Promise((resolve,reject)=>{
+   //             connection.query(query,values,(err,results)=>{
+   //                if(err)reject(new Error(err.message));
+   //                else resolve(results);
+   //             });
+   //           });
+   //          console.log(response);  // for debugging to see the result of select
+   //           return response;
+
+   //       }  catch(error){
+   //          console.log(error);
+   //       }
+   // }
+
    async searchByName(firstname,lastname){
-        try{
-             let query = "SELECT username,firstname,lastname,age,salary,registerday, signintime FROM Users WHERE 1=1";
-             let values = [];
-             if(firstname !== "all" && firstname!==""){
-               query+= " AND firstname LIKE ?";
-               values.push("%"+firstname +"%");
-             } 
-             if(lastname!=="all" && lastname !==""){
-               query+= " AND lastname LIKE ?";
-               values.push("%"+lastname +"%");
-             }
+       try{
+         const response = await new Promise((resolve,reject)=>{
+            const query = `SELECT * FROM Users WHERE firstname = ? OR lastname = ?;`;
 
-             query+=";";
-             const response= await new Promise((resolve,reject)=>{
-               connection.query(query,values,(err,results)=>{
-                  if(err)reject(new Error(err.message));
-                  else resolve(results);
-               });
-             });
-            console.log(response);  // for debugging to see the result of select
-             return response;
+            connection.query(query, [firstname,lastname], (err, results)=>{
+               if(err) reject(new Error(err.message));
+               else resolve(results);
+            });
+         });
 
-         }  catch(error){
-            console.log(error);
-         }
+         console.log(response);  
+         return response;
+      }
+      catch(error){
+         console.log(error);
+      }
    }
 
    //search by userid
