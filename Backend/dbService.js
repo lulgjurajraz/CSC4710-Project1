@@ -100,7 +100,7 @@ class DbService{
    //          // use await to call an asynchronous function
    //          const insertId = await new Promise((resolve, reject) => 
    //          {
-   //             const query = "INSERT INTO names (name, date_added) VALUES (?, ?);";
+   //             const query = "INSERT INTO names (name, registerday) VALUES (?, ?);";
    //             connection.query(query, [name, dateAdded], (err, result) => {
    //                 if(err) reject(new Error(err.message));
    //                 else resolve(result.insertId);
@@ -296,10 +296,10 @@ async regAfter(id){
       id = parseInt(id, 10);
 
       const idRegistered = await new Promise((resolve, reject) => {
-        const query = "SELECT date_added FROM Users WHERE id = ?;";
+        const query = "SELECT registerday FROM Users WHERE id = ?;";
         connection.query(query, [id], (err, results) => {
           if(err) reject(new Error(err.message));
-          else resolve(results[0].date_added);
+          else resolve(results[0].registerday);
         });
       });
 
@@ -312,7 +312,6 @@ async regAfter(id){
                 else resolve(results);
             });
         }
-
         
     );
     console.log(response);  // for debugging to see the result of select
@@ -330,17 +329,17 @@ async regAfter(id){
       id = parseInt(id, 10);
 
       const idRegistered = await new Promise((resolve, reject) => {
-        const query = "SELECT date_added FROM names WHERE id = ?;";
+        const query = "SELECT registerday FROM Users WHERE id = ?;";
         connection.query(query, [id], (err, results) => {
           if(err) reject(new Error(err.message));
-          else resolve(results[0].date_added);
+          else resolve(results[0].registerday);
         });
       });
 
         const response = await new Promise((resolve, reject) => 
         {
             
-            const query = "SELECT * FROM names WHERE date_added = ?;";
+            const query = "SELECT * FROM Users WHERE registerday = ?;";
             connection.query(query, [idRegistered], (err, results) => {
                 if(err) reject(new Error(err.message));
                 else resolve(results);
@@ -365,7 +364,7 @@ async regAfter(id){
         const response = await new Promise((resolve, reject) => 
         {
             
-            const query = "SELECT * FROM Users.registerday WHERE date_added = CURDATE();";
+            const query = "SELECT * FROM Users WHERE registerday = CURDATE();";
             connection.query(query, (err, results) => {
                 if(err) reject(new Error(err.message));
                 else resolve(results);
