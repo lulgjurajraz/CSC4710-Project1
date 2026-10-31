@@ -168,6 +168,14 @@ regTodayBtn.onclick = function (){
     .then(data => loadHTMLTable(data['data']));
 }
 
+//never signed in
+const neverSignedInBtn = document.querySelector('#btn-never-signed');
+neverSignedInBtn.onclick = function (){
+    fetch('http://localhost:5050/notSignedIn/')
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+}
+
 let rowToDelete; 
 
 // when the delete button is clicked, since it is not part of the DOM tree, we need to do it differently

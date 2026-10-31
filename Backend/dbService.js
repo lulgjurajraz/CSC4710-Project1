@@ -287,7 +287,6 @@ async userSignIn(username,password){
    }
 
    //never signed in
-
    async notSignedIn(){
       try{
          const response = await new Promise((resolve,reject)=>{
