@@ -79,7 +79,7 @@ class DbService{
          const hashPassword = await bcrypt.hash(password,10);
          const response = await new Promise((resolve, reject) =>{
             const query = `INSERT INTO Users (username,password,firstname,lastname,age,salary,registerday)
-            VALUES(:username,:password,:firstname,:lastname,:age,:salary,CURDATE());`;
+            VALUES(?,?,?,?,?,?,CURDATE());`;
 
             connection.query(query,[username,hashPassword,firstname,lastname,age,salary],(err, result)=>{
                if(err) reject(new Error(err.message));
@@ -166,11 +166,11 @@ async userSignIn(username,password){
              let query = "SELECT username,firstname,lastname,age,salary,registerday, signintime FROM Users WHERE 1=1";
              let values = [];
              if(firstname !== "all" && firstname!==""){
-               query+= "AND firstname LIKE ?";
+               query+= " AND firstname LIKE ?";
                values.push("%"+firstname +"%");
              } 
              if(lastname!=="all" && lastname !==""){
-               query+= "AND lastname LIKE ?";
+               query+= " AND lastname LIKE ?";
                values.push("%"+lastname +"%");
              }
 
@@ -306,7 +306,7 @@ async regAfter(id){
         const response = await new Promise((resolve, reject) => 
         {
             
-            const query = "SELECT * FROM Users.registerday WHERE date_added > ?;";
+            const query = "SELECT * FROM Users WHERE registerday > ?;";
             connection.query(query, [idRegistered], (err, results) => {
                 if(err) reject(new Error(err.message));
                 else resolve(results);
