@@ -16,24 +16,41 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}));
 
 // create
-app.post('/insert', (request, response) => {
-    console.log("app: insert a row.");
-    // console.log(request.body); 
-
-    const {name} = request.body;
+app.post('/register', (request, response) => {
+    const{username,password,firstname,lastname,age,salary}=request.body;
     const db = dbService.getDbServiceInstance();
+    const result = db.registerUser(username,password,firstname,lastname,age,salary);
 
-    const result = db.insertNewName(name);
  
     // note that result is a promise
     result 
-    .then(data => response.json({data: data})) // return the newly added row to frontend, which will show it
+    .then(data => {
+        response.json({success:data});
+    }) // return the newly added row to frontend, which will show it
    // .then(data => console.log({data: data})) // debug first before return by response
-   .catch(err => console.log(err));
+   .catch(err => {
+    console.log(err)});
 });
 
 
+//sign-in
+app.post('/signIn',(request,response)=>{
+    const {username,password} = request.body;
+    const db = dbService.getDbServiceInstance();
+    const result = db.userSignIn(username,password);
 
+    result
+    .then(data => {
+        if(data.length > 0){
+            response.json({success: true, data: data});
+        }else{
+            response.json({success: false});
+        }
+    })
+    .catch(err =>{
+        console.log(err);
+    })
+})
 
 // read 
 app.get('/getAll', (request, response) => {
@@ -68,9 +85,20 @@ app.get('/search/:name', (request, response) => { // we can debug by URL
     .catch(err => console.log(err));
 });
 
-//search by first name
+//search by first name/last name
+app.get('/search/:firstname/:lastname',(request,response)=>{
+    const{firstname,lastname} = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.searchByName(firstname,lastname);
 
-//search by last name
+    result
+    .then(data=> response.json({data:data}))
+    .catch(err =>{
+        console.log(err);
+        response.status(500).json({message: "Search failed"});
+    });
+
+});
 
 //search by userID
 
@@ -94,6 +122,18 @@ app.get('/searchById/:id', (request, response) => { // we can debug by URL
 });
 
 //search by salary
+app.get('/searchBySalary/:salary1/:salary2',(request,response)=>{
+    const {salary1,salary2} = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.searchBySalary(salary1, salary2);
+
+    result
+    .then(data => response.json({data: data}))
+    .catch(err=>{
+        console.log(err);
+    
+    });
+});
 
 // search by age
 app.get('/searchByAge/:age1/:age2', (request, response) => {
@@ -123,6 +163,18 @@ app.get('/regAfter/:id', (request, response) => {
     .then(data => response.json({data: data}))
     .catch(err => console.log(err));
 });
+
+//search never signed in
+app.get('/notSignedIn', (request,response)=>{
+    const db = dbService.getDbServiceInstance();
+    const result = db.notSignedIn();
+
+    result.then(data => response.json({data: data}))
+    .catch(err =>{
+        console.log(err);
+    });
+});
+
 
 //registered same day as 
 app.get('/regSameDay/:id', (request, response) => {
@@ -164,20 +216,20 @@ app.patch('/update',
      }
 );
 
-// delete service
-app.delete('/delete/:id', 
-     (request, response) => {     
-        const {id} = request.params;
-        console.log("delete");
-        console.log(id);
-        const db = dbService.getDbServiceInstance();
+// // delete service
+// app.delete('/delete/:id', 
+//      (request, response) => {     
+//         const {id} = request.params;
+//         console.log("delete");
+//         console.log(id);
+//         const db = dbService.getDbServiceInstance();
 
-        const result = db.deleteRowById(id);
+//         const result = db.deleteRowById(id);
 
-        result.then(data => response.json({success: true}))
-        .catch(err => console.log(err));
-     }
-)   
+//         result.then(data => response.json({success: true}))
+//         .catch(err => console.log(err));
+//      }
+// )   
 
 // debug function, will be deleted later
 app.post('/debug', (request, response) => {
@@ -206,13 +258,13 @@ app.get('/testdb', (request, response) => {
 
 // set up the web server listener
 // if we use .env to configure
-/*
-app.listen(process.env.PORT, 
-    () => {
-        console.log("I am listening on the configured port " + process.env.PORT)
-    }
-);
-*/
+
+// app.listen(process.env.PORT, 
+//     () => {
+//         console.log("I am listening on the configured port " + process.env.PORT)
+//     }
+// );
+
 
 // if we configure here directly
 app.listen(5050, 
