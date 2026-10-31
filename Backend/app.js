@@ -86,7 +86,7 @@ app.get('/search/:name', (request, response) => { // we can debug by URL
 });
 
 //search by first name/last name
-app.get('/search/:firstname/:lastname',(request,response)=>{
+app.get('/searchByName/:firstname/:lastname',(request,response)=>{
     const{firstname,lastname} = request.params;
     const db = dbService.getDbServiceInstance();
     const result = db.searchByName(firstname,lastname);
@@ -129,10 +129,7 @@ app.get('/searchBySalary/:salary1/:salary2',(request,response)=>{
 
     result
     .then(data => response.json({data: data}))
-    .catch(err=>{
-        console.log(err);
-    
-    });
+    .catch(err => console.log(err));
 });
 
 // search by age

@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //     .then(data => loadHTMLTable(data['data']));
 // }
 
+
 //this is me messing around with ID search
 const searchID =  document.querySelector('#search-btn-id');
 searchID.onclick = function (){
@@ -95,6 +96,19 @@ searchID.onclick = function (){
     .then(data => loadHTMLTable(data['data']));
 }
 
+const searchSalary =  document.querySelector('#search-btn-salary');
+searchSalary.onclick = function (){
+    const searchInput1 = document.querySelector('#minimum-salary');
+    const searchInput2 = document.querySelector('#maximum-salary');
+    const salary1 = searchInput1.value;
+    const salary2 = searchInput2.value;
+    searchInput1.value = "";
+    searchInput2.value = "";
+
+    fetch('http://localhost:5050/searchBySalary/' + salary1 + '/' + salary2)
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+}
 
 //search by age
 const searchAge =  document.querySelector('#search-btn-age');
@@ -281,7 +295,7 @@ function debug(data)
 // }
 
 function loadHTMLTable(data){
-   // debug("index.js: loadHTMLTable called.");
+   debug("index.js: loadHTMLTable called.");
 
     const table = document.querySelector('table tbody'); 
     
