@@ -83,6 +83,20 @@ document.addEventListener('DOMContentLoaded', function() {
 //     .then(data => loadHTMLTable(data['data']));
 // }
 
+const searchName =  document.querySelector('#btn-search-name');
+searchName.onclick = function (){
+    const searchInput1 = document.querySelector('#firstname-search');
+    const searchInput2 = document.querySelector('#lastname-search');
+    const firstname = searchInput1.value;
+    const lastname = searchInput2.value;
+    searchInput1.value = "";
+    searchInput2.value = "";
+
+    fetch('http://localhost:5050/searchByName/' + firstname + '/' + lastname)
+    .then(response => response.json())
+    .then(data => loadHTMLTable(data['data']));
+}
+
 //this is me messing around with ID search
 const searchID =  document.querySelector('#search-btn-id');
 searchID.onclick = function (){
@@ -300,7 +314,7 @@ function debug(data)
 // }
 
 function loadHTMLTable(data){
-   // debug("index.js: loadHTMLTable called.");
+   debug("index.js: loadHTMLTable called.");
 
     const table = document.querySelector('table tbody'); 
     
