@@ -95,6 +95,25 @@ searchID.onclick = function (){
     .then(data => loadHTMLTable(data['data']));
 }
 
+const salarySearch = document.querySelector('#search-btn-salary');
+salarySearch.onclick = function(){
+    const searchIn1 = document.querySelector('#minimum-salary');
+    const searchIn2 = document.querySelector('#maximum-salary');
+
+    const salary1 = searchIn1.value;
+    const salary2 = searchIn2.value;
+   
+    fetch('http://localhost:5050/searchBySalary/'+salary1+'/'+salary2)
+    .then(response=> response.json())
+    .then(data => {
+        loadHTMLTable(data.data);
+    })
+    .catch(error=> {
+        console.error("Salary search error:",error);
+
+    });
+
+};
 
 //search by age
 const searchAge =  document.querySelector('#search-btn-age');
@@ -286,7 +305,7 @@ function loadHTMLTable(data){
     const table = document.querySelector('table tbody'); 
     
     if(data.length === 0){
-        table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
+        table.innerHTML = "<tr><td class='no-data' colspan='7'>No Data</td></tr>";
         return;
     }
   

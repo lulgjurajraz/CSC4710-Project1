@@ -53,7 +53,7 @@ app.post('/signIn',(request,response)=>{
 })
 
 // read 
-app.get('/getAll', (request, response) => {
+app.get('/getAll', async (request, response) => {
     
     const db = dbService.getDbServiceInstance();
 
