@@ -66,24 +66,24 @@ app.get('/getAll', async (request, response) => {
 });
 
 //SEARCH
-app.get('/search/:name', (request, response) => { // we can debug by URL
+// app.get('/search/:name', (request, response) => { // we can debug by URL
     
-    const {name} = request.params;
+//     const {name} = request.params;
     
-    console.log(name);
+//     console.log(name);
 
-    const db = dbService.getDbServiceInstance();
+//     const db = dbService.getDbServiceInstance();
 
-    let result;
-    if(name === "all") // in case we want to search all
-       result = db.getAllData()
-    else 
-       result =  db.searchByName(name); // call a DB function
+//     let result;
+//     if(name === "all") // in case we want to search all
+//        result = db.getAllData()
+//     else 
+//        result =  db.searchByName(name); // call a DB function
 
-    result
-    .then(data => response.json({data: data}))
-    .catch(err => console.log(err));
-});
+//     result
+//     .then(data => response.json({data: data}))
+//     .catch(err => console.log(err));
+// });
 
 //search by first name/last name
 app.get('/searchByName/:firstname/:lastname',(request,response)=>{
