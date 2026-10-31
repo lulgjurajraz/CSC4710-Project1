@@ -228,16 +228,16 @@ let rowToDelete;
 
 
 // this function is used for debugging only, and should be deleted afterwards
-// function debug(data)
-// {
-//     fetch('http://localhost:5050/debug', {
-//         headers: {
-//             'Content-type': 'application/json'
-//         },
-//         method: 'POST',
-//         body: JSON.stringify({debug: data})
-//     })
-// }
+function debug(data)
+{
+    fetch('http://localhost:5050/debug', {
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({debug: data})
+    })
+}
 
 // function insertRowIntoTable(data){
 
@@ -281,7 +281,7 @@ let rowToDelete;
 // }
 
 function loadHTMLTable(data){
-    debug("index.js: loadHTMLTable called.");
+   // debug("index.js: loadHTMLTable called.");
 
     const table = document.querySelector('table tbody'); 
     
